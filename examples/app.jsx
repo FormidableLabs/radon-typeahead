@@ -66,7 +66,7 @@ var App = React.createClass({
     return (
       <div>
         <h3>Basic Typeahead</h3>
-        <RadonTypeahead list={carBrandsArray} />
+        <RadonTypeahead list={carBrandsArray} inputComponent={<input />}/>
         <h3>Complex Typeahead</h3>
         {this.state.complexCarBrand}<RadonTypeahead
           onChange={this.onChangeComplexTypeahead}

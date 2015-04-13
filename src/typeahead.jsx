@@ -168,12 +168,15 @@ var classBase = React.createClass({
   render () {
     return (
       <div>
-        <input
-          ref='input'
-          value={this.state.val}
-          onChange={this.onChange}
-          onKeyDown={this.onKeyDown.bind(this, false)}
-          onBlur={this.hideList} />
+        {cloneWithProps(
+          this.props.inputComponent || <input />,
+          {
+            value: this.state.val,
+            onChange: this.onChange,
+            onKeyDown: this.onKeyDown.bind(this, false),
+            onBlur: this.hideList
+          })
+        }
         {this.state.listOpen ?
           <div className='typeahead-list'>
             {this.state.list.map((item, i) => {
