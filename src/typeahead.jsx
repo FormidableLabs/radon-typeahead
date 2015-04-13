@@ -149,6 +149,10 @@ var classBase = React.createClass({
       selectedOptionIndex: false
     };
 
+    if (!this.props.manualMode) {
+      state.list = [];
+    }
+
     if (typeof option === 'string') {
       state.val = option;
     } else if (typeof option === 'object' && option.value) {
