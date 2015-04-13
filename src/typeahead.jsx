@@ -1,6 +1,7 @@
 'use strict';
 var React = require('react');
 var cloneWithProps = require('react/lib/cloneWithProps');
+var filter = require('lodash.filter');
 
 var keyboard = {
   space: 32,
@@ -18,6 +19,7 @@ var classBase = React.createClass({
   getDefaultProps () {
     return {
       list: [],
+      manualMode: false,
       onChange () {}
     };
   },
@@ -26,8 +28,16 @@ var classBase = React.createClass({
       val: '',
       oldVal: '',
       selectedOptionIndex: false,
+      list: [],
       listOpen: true
     };
+  },
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.manualMode === true) {
+      this.setState({
+        list: nextProps.list
+      });
+    }
   },
   hideList () {
     this.setState({
@@ -35,15 +45,29 @@ var classBase = React.createClass({
     });
   },
   onChange (ev) {
-    this.setState({
+    var val = ev.target.value;
+    var state = {
       listOpen: true,
       selectedOptionIndex: false,
-      val: ev.target.value
-    });
+      val
+    };
+
+    if (!this.props.manualMode) {
+      if (val !== '') {
+        // This typeahead matcher only matches beginning of string.
+        state.list = filter(this.props.list, function (item) {
+          return item.toLowerCase().indexOf(val.toLowerCase()) === 0;
+        });
+      } else {
+        state.list = [];
+      }
+    }
+
+    this.setState(state);
 
     // This value won't have propagated to the DOM yet.
     // Could put this in the setState callback but this alerts the implementor faster
-    this.props.onChange(ev.target.value);
+    this.props.onChange(val);
   },
   resetOldVal () {
     this.setState({
@@ -53,7 +77,7 @@ var classBase = React.createClass({
     });
   },
   setNewSelectedIndex (index, oldVal) {
-    var option = this.props.list[index];
+    var option = this.state.list[index];
     var state = {
       selectedOptionIndex: index,
       oldVal: typeof oldVal === 'undefined' ? this.state.oldVal : oldVal
@@ -74,7 +98,7 @@ var classBase = React.createClass({
   },
   moveIndexByOne (decrement) {
     var currentOption = this.state.selectedOptionIndex;
-    var listLength = this.props.list.length;
+    var listLength = this.state.list.length;
 
     // keyboard navigation from the input
     if (currentOption === false) {
@@ -94,7 +118,7 @@ var classBase = React.createClass({
   // Arrow keys are only captured by onKeyDown not onKeyPress
   // http://stackoverflow.com/questions/5597060/detecting-arrow-key-presses-in-javascript
   onKeyDown (i, ev) {
-    if (!this.props.list || this.props.list.length === 0) {
+    if (!this.state.list || this.state.list.length === 0) {
       return;
     }
 
@@ -119,7 +143,7 @@ var classBase = React.createClass({
     }
   },
   onClickOption (index) {
-    var option = this.props.list[index];
+    var option = this.state.list[index];
     var state = {
       listOpen: false,
       selectedOptionIndex: false
@@ -148,7 +172,7 @@ var classBase = React.createClass({
           onBlur={this.hideList} />
         {this.state.listOpen ?
           <div className='typeahead-list'>
-            {this.props.list.map((item, i) => {
+            {this.state.list.map((item, i) => {
               var props = {
                 children: {}
               };

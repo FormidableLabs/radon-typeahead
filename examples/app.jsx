@@ -22,31 +22,9 @@ var App = React.createClass({
   displayName: 'App',
   getInitialState() {
     return {
-      basicList: [],
       complexList: [],
       complexCarBrand: '',
     };
-  },
-  onChangeBasicTypeahead(val) {
-    if (val !== '') {
-      // This typeahead matcher only matches beginning of string.
-      var list = _.filter(carBrandsArray, function (carBrand) {
-        return carBrand.toLowerCase().indexOf(val.toLowerCase()) === 0;
-      });
-
-      this.setState({
-        basicList: list
-      });
-    } else {
-      this.setState({
-        basicList: []
-      });
-    }
-  },
-  onSelectBasicOption() {
-    this.setState({
-      basicList: []
-    });
   },
   onChangeComplexTypeahead(val) {
     var list = [];
@@ -89,14 +67,11 @@ var App = React.createClass({
       <div>
         <h3>Basic Typeahead</h3>
         <RadonTypeahead
-          key={1}
-          onChange={this.onChangeBasicTypeahead}
-          onSelectOption={this.onSelectBasicOption}
-          list={this.state.basicList} />
+          list={carBrandsArray} />
         <h3>Complex Typeahead</h3>
         {this.state.complexCarBrand}<RadonTypeahead
-          key={2}
           onChange={this.onChangeComplexTypeahead}
+          manualMode={true}
           onArrowNavigation={this.onNavigateToComplexOption}
           onSelectOption={this.onSelectComplexOption}
           list={this.state.complexList}

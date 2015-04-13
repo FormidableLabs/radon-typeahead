@@ -39,5 +39,6 @@
     "webpack-dev-server": "^1.7.0"
   },
   "dependencies": {
+    "lodash.filter": "^3.1.0"
   }
 }
