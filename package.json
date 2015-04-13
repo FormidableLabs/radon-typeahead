@@ -1,7 +1,7 @@
 {
-  "name": "radon-select",
+  "name": "radon-typeahead",
   "version": "0.0.1",
-  "description": "React select box replacement component",
+  "description": "React typeahead component",
   "main": "index.js",
   "scripts": {
     "examples": "webpack-dev-server --config examples/webpack.config.js --no-info --content-base examples/"
