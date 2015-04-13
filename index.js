@@ -1,1 +1,1 @@
-module.exports = require('./lib/select.js');
+module.exports = require('./lib/typeahead.js');
