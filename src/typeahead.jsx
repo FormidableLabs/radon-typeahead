@@ -215,7 +215,7 @@ var classBase = React.createClass({
               props.key = i;
               props.ref = i;
               props.query = this.state.selectedOptionIndex !== false ? this.state.oldVal : this.state.val;
-              props.onClick = this.onClickOption.bind(this, i);
+              props.onMouseDown = this.onClickOption.bind(this, i);
               props.role = 'button';
               props.selected = i === this.state.selectedOptionIndex;
               props.tabIndex = -1;
