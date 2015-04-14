@@ -183,7 +183,7 @@ var classBase = React.createClass({
   render () {
     return (
       <div>
-        {cloneWithProps(
+        {React.cloneElement(
           this.props.inputComponent || <input />,
           {
             value: this.state.val,
