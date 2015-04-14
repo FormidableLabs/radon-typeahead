@@ -186,7 +186,7 @@ var classBase = React.createClass({
   },
   render () {
     return (
-      <div>
+      <div style={this.props.mainStyle}>
         {React.cloneElement(
           this.props.inputComponent || <input />,
           {
@@ -197,7 +197,7 @@ var classBase = React.createClass({
           })
         }
         {this.state.listOpen ?
-          <div className={this.props.listClassName || 'typeahead-list'}>
+          <div className={this.props.listClassName || 'typeahead-list'} style={this.props.listStyle}>
             {this.state.list.map((item, i) => {
               var props = {
                 children: {}
