@@ -64,6 +64,7 @@ var classBase = React.createClass({
         });
       } else {
         state.list = [];
+        state.listOpen = false;
       }
     }
 
