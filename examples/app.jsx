@@ -2,6 +2,7 @@ var React = require('react');
 var _ = require('lodash');
 var RadonTypeahead = require('../lib/typeahead.js');
 var ListItem = require('./list-item.jsx');
+var AjaxAhead = require('./ajax-ahead.jsx');
 var carBrandsArray = require('./list-of-car-brands.js');
 var carModelsArray = require('./list-of-car-models.js');
 
@@ -68,13 +69,16 @@ var App = React.createClass({
         <h3>Basic Typeahead</h3>
         <RadonTypeahead list={carBrandsArray} inputComponent={<input />}/>
         <h3>Complex Typeahead</h3>
-        {this.state.complexCarBrand}<RadonTypeahead
+        <p>Selected: {this.state.complexCarBrand}</p>
+        <RadonTypeahead
           onChange={this.onChangeComplexTypeahead}
           manualMode={true}
           onArrowNavigation={this.onNavigateToComplexOption}
           onSelectOption={this.onSelectComplexOption}
           list={this.state.complexList}
           listItemComponent={<ListItem />} />
+        <h3>AJAX Typeahead</h3>
+        <AjaxAhead />
       </div>
     );
   }

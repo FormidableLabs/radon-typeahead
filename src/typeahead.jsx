@@ -32,10 +32,11 @@ var classBase = React.createClass({
       listOpen: false
     };
   },
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.manualMode === true) {
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.list && nextProps.manualMode === true) {
       this.setState({
-        list: nextProps.list
+        list: nextProps.list,
+        listOpen: nextProps.list.length !== 0
       });
     }
   },
@@ -74,7 +75,24 @@ var classBase = React.createClass({
 
     // This value won't have propagated to the DOM yet.
     // Could put this in the setState callback but this alerts the implementor faster
-    this.props.onChange(val);
+    if (this.props.manualMode) {
+      // add an async callback for updating the list
+      this.props.onChange(val, (list) => {
+        if (list) {
+          this.setState({
+            list,
+            // if the list comes back empty
+            listOpen: list.length !== 0
+          });
+        } else {
+          this.setState({
+            listOpen: false
+          });
+        }
+      });
+    } else {
+      this.props.onChange(val);
+    }
   },
   resetOldVal () {
     this.setState({

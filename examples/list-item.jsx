@@ -1,6 +1,5 @@
 var React = require('react');
 
-
 module.exports = React.createClass({
   render() {
     return <div {...this.props} className={this.props.selected ? 'selected' : ''}>
