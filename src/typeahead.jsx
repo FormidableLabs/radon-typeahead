@@ -3,6 +3,8 @@ var React = require('react');
 var cloneWithProps = require('react/lib/cloneWithProps');
 var filter = require('lodash.filter');
 
+React.initializeTouchEvents(true);
+
 var keyboard = {
   space: 32,
   enter: 13,
@@ -234,6 +236,11 @@ var classBase = React.createClass({
               props.ref = i;
               props.query = this.state.selectedOptionIndex !== false ? this.state.oldVal : this.state.val;
               props.onMouseDown = this.onClickOption.bind(this, i);
+
+              // This is a workaround for a long-standing iOS/React issue with click events.
+              // See https://github.com/facebook/react/issues/134 for more information.
+              props.onTouchStart = this.onClickOption.bind(this, i);
+
               props.role = 'button';
               props.selected = i === this.state.selectedOptionIndex;
               props.tabIndex = -1;
