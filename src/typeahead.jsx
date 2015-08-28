@@ -54,7 +54,6 @@ var classBase = React.createClass({
       list: [],
       listOpen: false,
       selectedOptionIndex: false,
-      touchScroll: false,
       val
     };
 
@@ -208,10 +207,6 @@ var classBase = React.createClass({
     if (typeof this.props.onSelectOption === 'function') {
       this.props.onSelectOption(option, index);
     }
-  },
-
-  onTouchStart (index) {
-    this.setState({ touchScroll: false });
   },
 
   // Once the user has let up on a touch, determine whether their touch was part of a scrolling
