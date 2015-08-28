@@ -214,18 +214,18 @@ var classBase = React.createClass({
   // If it was indeed a scroll gesture, we'll consider it a no-op and reset the state variable.
   // We'll only consider the touch a selection in the case that they did not drag at all between
   // the time of touch start and touch end.
-  onTouchEnd:function (index) {
+  onTouchEnd: function (index) {
     if (!this.state.touchScroll) {
       this.onClickOption(index);
     }
 
-    this.setState({ touchScroll: false });
+    this.setState({touchScroll: false});
   },
 
   // capture a mouse drag on a typeahead suggestion and consider it as a 'scrolling' gesture.
   // we'll track this scrolling as a state variable, 'touchScroll'.
-  onTouchMove:function () {
-    this.setState({ touchScroll: true });
+  onTouchMove: function () {
+    this.setState({touchScroll: true});
   },
 
   render () {
