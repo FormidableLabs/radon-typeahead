@@ -241,7 +241,7 @@ var classBase = React.createClass({
           })
         }
         {this.state.listOpen ?
-          <div className={this.props.listClassName || 'typeahead-list'} style={this.props.listStyle} onScroll={this.onScroll}>
+          <div className={this.props.listClassName || 'typeahead-list'} style={this.props.listStyle}>
             {this.state.list.map((item, i) => {
               var props = {
                 children: {}
