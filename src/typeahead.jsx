@@ -261,7 +261,7 @@ var classBase = React.createClass({
               // This is a workaround for a long-standing iOS/React issue with click events.
               // See https://github.com/facebook/react/issues/134 for more information.
               props.onTouchEnd = this.onTouchEnd.bind(this, i);
-              props.onTouchMove = this.onTouchMove.bind(this, i);
+              props.onTouchMove = this.onTouchMove.bind(this);
 
               props.role = 'button';
               props.selected = i === this.state.selectedOptionIndex;
