@@ -31,7 +31,8 @@ var classBase = React.createClass({
       oldVal: '',
       selectedOptionIndex: false,
       list: [],
-      listOpen: false
+      listOpen: false,
+      touchScroll: false
     };
   },
   componentWillReceiveProps (nextProps) {
@@ -53,6 +54,7 @@ var classBase = React.createClass({
       list: [],
       listOpen: false,
       selectedOptionIndex: false,
+      touchScroll: false,
       val
     };
 
@@ -207,6 +209,30 @@ var classBase = React.createClass({
       this.props.onSelectOption(option, index);
     }
   },
+
+  onTouchStart (index) {
+    this.setState({ touchScroll: false });
+  },
+
+  // Once the user has let up on a touch, determine whether their touch was part of a scrolling
+  // gesture (via the state variable, 'touchScroll').
+  // If it was indeed a scroll gesture, we'll consider it a no-op and reset the state variable.
+  // We'll only consider the touch a selection in the case that they did not drag at all between
+  // the time of touch start and touch end.
+  onTouchEnd:function (index) {
+    if (!this.state.touchScroll) {
+      this.onClickOption(index);
+    }
+
+    this.setState({ touchScroll: false });
+  },
+
+  // capture a mouse drag on a typeahead suggestion and consider it as a 'scrolling' gesture.
+  // we'll track this scrolling as a state variable, 'touchScroll'.
+  onTouchMove:function () {
+    this.setState({ touchScroll: true });
+  },
+
   render () {
     return (
       <div style={this.props.mainStyle}>
@@ -220,7 +246,7 @@ var classBase = React.createClass({
           })
         }
         {this.state.listOpen ?
-          <div className={this.props.listClassName || 'typeahead-list'} style={this.props.listStyle}>
+          <div className={this.props.listClassName || 'typeahead-list'} style={this.props.listStyle} onScroll={this.onScroll}>
             {this.state.list.map((item, i) => {
               var props = {
                 children: {}
@@ -239,7 +265,9 @@ var classBase = React.createClass({
 
               // This is a workaround for a long-standing iOS/React issue with click events.
               // See https://github.com/facebook/react/issues/134 for more information.
-              props.onTouchStart = this.onClickOption.bind(this, i);
+              // props.onTouchStart = this.onClickOption.bind(this, i);
+              props.onTouchEnd = this.onTouchEnd.bind(this, i);
+              props.onTouchMove = this.onTouchMove.bind(this, i);
 
               props.role = 'button';
               props.selected = i === this.state.selectedOptionIndex;
