@@ -179,6 +179,16 @@ var classBase = React.createClass({
     }
   },
   onBlur (ev) {
+    // Clicks on the scrollbar will trigger the blur event, which can cause some unintended
+    // behavior. However, the only way we can evaluate if this was indeed a scrollbar click,
+    // is to check if any of this component's children have a 'hover'.
+    // So, if the mouse is hovering within our typeahead during this blur event, instead of
+    // hiding the list, we'll consider it to be a scroll click and do nothing.
+    var hoveredSelectEl = React.findDOMNode(this).querySelector(':hover');
+    if (hoveredSelectEl) {
+      return;
+    }
+
     if (this.props.inputComponent && this.props.inputComponent.props.onBlur) {
       this.props.inputComponent.props.onBlur(ev);
     }
