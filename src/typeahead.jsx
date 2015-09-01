@@ -123,7 +123,6 @@ var classBase = React.createClass({
     }
 
     this.setState(state, function () {
-      React.findDOMNode(this.refs['option' + this.state.selectedOptionIndex]).focus();
       if (typeof this.props.onArrowNavigation === 'function') {
         this.props.onArrowNavigation(option, index);
       }
@@ -217,6 +216,12 @@ var classBase = React.createClass({
 
     if (typeof this.props.onSelectOption === 'function') {
       this.props.onSelectOption(option, index);
+    }
+  },
+  onMouseDown (ev) {
+    // ensure clicks on the scrollbar do not steal focus
+    if (this.state.listOpen) {
+      ev.preventDefault();
     }
   },
   // Once the user has let up on a touch, determine whether their touch was part of a scrolling
