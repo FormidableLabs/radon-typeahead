@@ -219,12 +219,18 @@ var classBase = React.createClass({
     }
   },
 
+  onMouseDown (ev) {
+    if (this.state.listOpen) {
+      ev.preventDefault();
+    }
+  },
+
   // Once the user has let up on a touch, determine whether their touch was part of a scrolling
   // gesture (via the state variable, 'touchScroll').
   // If it was indeed a scroll gesture, we'll consider it a no-op and reset the state variable.
   // We'll only consider the touch a selection in the case that they did not drag at all between
   // the time of touch start and touch end.
-  onTouchEnd: function (index) {
+  onTouchEnd (index) {
     if (!this.state.touchScroll) {
       this.onClickOption(index);
     }
@@ -234,13 +240,13 @@ var classBase = React.createClass({
 
   // capture a mouse drag on a typeahead suggestion and consider it as a 'scrolling' gesture.
   // we'll track this scrolling as a state variable, 'touchScroll'.
-  onTouchMove: function () {
+  onTouchMove () {
     this.setState({touchScroll: true});
   },
 
   render () {
     return (
-      <div style={this.props.mainStyle}>
+      <div style={this.props.mainStyle} onClick={this.onMouseDown}>
         {React.cloneElement(
           this.props.inputComponent || <input />,
           {
