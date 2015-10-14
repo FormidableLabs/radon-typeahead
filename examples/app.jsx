@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 var _ = require('lodash');
 var RadonTypeahead = require('../lib/typeahead.js');
 var ListItem = require('./list-item.jsx');
@@ -84,4 +85,4 @@ var App = React.createClass({
   }
 });
 
-React.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));

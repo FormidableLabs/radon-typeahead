@@ -1,9 +1,8 @@
 'use strict';
 var React = require('react');
+var ReactDOM = require('react-dom');
 var cloneWithProps = require('react/lib/cloneWithProps');
 var filter = require('lodash.filter');
-
-React.initializeTouchEvents(true);
 
 var keyboard = {
   space: 32,
@@ -15,7 +14,7 @@ var keyboard = {
 };
 
 var classBase = React.createClass({
-  displayName: 'RadonSelect',
+  displayName: 'RadonTypeahead',
   propTypes: {
   },
   getDefaultProps () {
@@ -184,7 +183,7 @@ var classBase = React.createClass({
     // is to check if any of this component's children have a 'hover'.
     // So, if the mouse is hovering within our typeahead during this blur event, instead of
     // hiding the list, we'll consider it to be a scroll click and do nothing.
-    var hoveredSelectEl = React.findDOMNode(this).querySelector(':hover');
+    var hoveredSelectEl = ReactDOM.findDOMNode(this).querySelector(':hover');
     if (hoveredSelectEl) {
       return;
     }
@@ -274,13 +273,13 @@ var classBase = React.createClass({
               // This is a workaround for a long-standing iOS/React issue with click events.
               // See https://github.com/facebook/react/issues/134 for more information.
               props.onTouchEnd = this.onTouchEnd.bind(this, i);
-              props.onTouchMove = this.onTouchMove.bind(this);
+              props.onTouchMove = this.onTouchMove;
 
               props.role = 'button';
               props.selected = i === this.state.selectedOptionIndex;
               props.tabIndex = -1;
 
-              return cloneWithProps(
+              return React.cloneElement(
                 this.props.listItemComponent || <div className={props.selected ? 'selected' : ''} />,
                 props
               );
