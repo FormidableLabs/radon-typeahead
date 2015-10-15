@@ -1,6 +1,6 @@
 {
   "name": "radon-typeahead",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "React typeahead component",
   "main": "index.js",
   "scripts": {
