@@ -4,7 +4,11 @@
   "description": "React typeahead component",
   "main": "index.js",
   "scripts": {
-    "examples": "webpack-dev-server --config examples/webpack.config.js --no-info --content-base examples/"
+    "examples": "webpack-dev-server --config examples/webpack.config.js --no-info --content-base examples/",
+    "lib": "rimraf lib && babel --stage 0 src/ -d lib/",
+    "lint": "eslint src/select.jsx",
+    "prepublish": "npm run lib",
+    "test": "karma start"
   },
   "author": "",
   "license": "MIT",
@@ -29,7 +33,8 @@
     "karma-webpack": "^1.5.0",
     "lodash": "^3.6.0",
     "mocha": "^2.2.1",
-    "react": "^0.13.3",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
     "sinon": "^1.14.1",
     "sinon-chai": "^2.7.0",
     "webpack": "^1.5.3",
