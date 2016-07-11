@@ -1,4 +1,4 @@
-module.exports = [
+[
   "Alfa Romeo",
   "Audi",
   "Bmw",
@@ -23,4 +23,4 @@ module.exports = [
   "Suzuki",
   "Toyota",
   "Volkswagen"
-];
+]

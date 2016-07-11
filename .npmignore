@@ -18,4 +18,10 @@ npm-debug.log*
 coverage
 node_modules
 bower_components
-lib
+demo
+test
+karma*
+webpack*
+.eslint*
+.editor*
+.travis*

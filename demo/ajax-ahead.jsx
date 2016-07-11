@@ -1,18 +1,19 @@
-var React = require('react');
-var RadonTypeahead = require('../lib/typeahead.js');
-var carBrandsArray = require('./list-of-car-brands.js');
+/* eslint-env browser */
+import React from "react";
+import RadonTypeahead from "../lib/components/typeahead";
+import carBrandsArray from "./car-brands";
 
-module.exports = React.createClass({
+export default React.createClass({
   getInitialState() {
     return {
-      selectedVal: ''
+      selectedVal: ""
     };
   },
   onTypeaheadChange(val, asyncListCallback) {
     // mimic async ajax call
     setTimeout(() => {
       // Make the ajax call with `val`
-      var filteredList = carBrandsArray.filter(function (brand) {
+      const filteredList = carBrandsArray.filter((brand) => {
         return brand.toLowerCase().indexOf(val.toLowerCase()) === 0;
       });
 
@@ -35,7 +36,8 @@ module.exports = React.createClass({
           list={this.state.ajaxList}
           onChange={this.onTypeaheadChange}
           onSelectOption={this.onTypeaheadSelection}
-          manualMode={true} />
+          manualMode
+        />
       </div>
     );
   }
