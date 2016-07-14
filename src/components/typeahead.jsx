@@ -280,8 +280,7 @@ export default React.createClass({
 
               props.key = i;
               props.ref = i;
-              props.query = this.state.selectedOptionIndex !== false ?
-                this.state.oldVal : this.state.val;
+
               props.onMouseDown = this.onClickOption.bind(this, i);
 
               // This is a workaround for a long-standing iOS/React issue with
@@ -294,11 +293,17 @@ export default React.createClass({
               props.selected = i === this.state.selectedOptionIndex;
               props.tabIndex = -1;
 
-              return React.cloneElement(
-                this.props.listItemComponent ||
-                  <div className={props.selected ? "selected" : ""} />,
-                props
-              );
+              const baseElement = this.props.listItemComponent ||
+                  <div className={props.selected ? "selected" : ""} />;
+
+              // Only set `query` prop on component elements, not DOM elements,
+              // otherwise React will issue a warning.
+              if (typeof baseElement.type !== "string") {
+                props.query = this.state.selectedOptionIndex !== false ?
+                  this.state.oldVal : this.state.val;
+              }
+
+              return React.cloneElement(baseElement, props);
             })}
           </div>
           :

@@ -2,9 +2,10 @@ import React, { PropTypes } from "react";
 
 export default class ListItem extends React.Component {
   render() {
+    const { brand, model, query, ...props } = this.props;
     return (
-      <div {...this.props} className={this.props.selected ? "selected" : ""}>
-        {this.props.brand} - {this.props.model}
+      <div {...props} className={this.props.selected ? "selected" : ""}>
+        {brand} - {model}
       </div>
     );
   }
