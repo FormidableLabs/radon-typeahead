@@ -14,5 +14,6 @@ export default class ListItem extends React.Component {
 ListItem.propTypes = {
   brand: PropTypes.string,
   model: PropTypes.string,
+  query: PropTypes.string,
   selected: PropTypes.bool
 };

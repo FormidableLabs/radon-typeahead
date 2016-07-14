@@ -249,6 +249,9 @@ export default React.createClass({
   onTouchMove() {
     this.setState({touchScroll: true});
   },
+  renderListItem() {
+
+  },
   render() {
     return (
       <div style={this.props.mainStyle}>
@@ -268,15 +271,8 @@ export default React.createClass({
             onMouseDown={this.onMouseDown}
           >
             {this.state.list.map((item, i) => {
-              let props = {
-                children: {}
-              };
-
-              if (typeof item === "string") {
-                props.children = item;
-              } else {
-                props = item;
-              }
+              const props = typeof item === "string" ?
+                { children: item } : item;
 
               props.key = i;
               props.ref = i;
