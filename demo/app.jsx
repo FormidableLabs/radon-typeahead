@@ -1,15 +1,16 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var _ = require('lodash');
-var RadonTypeahead = require('../lib/typeahead.js');
-var ListItem = require('./list-item.jsx');
-var AjaxAhead = require('./ajax-ahead.jsx');
-var carBrandsArray = require('./list-of-car-brands.js');
-var carModelsArray = require('./list-of-car-models.js');
+/*global document:false*/
+import React from "react";
+import ReactDOM from "react-dom";
+import _ from "lodash";
+import RadonTypeahead from "../src/index";
+import ListItem from "./list-item";
+import AjaxAhead from "./ajax-ahead";
+import carBrandsArray from "./car-brands";
+let carModelsArray = require("./car-models");
 
-carModelsArray = _(_.cloneDeep(carModelsArray))
-  .map(function (carBrandObj) {
-    return _.map(carBrandObj.models, function (model) {
+carModelsArray = _(carModelsArray)
+  .map((carBrandObj) => {
+    return _.map(carBrandObj.models, (model) => {
       return {
         brand: carBrandObj.brand,
         model,
@@ -20,26 +21,26 @@ carModelsArray = _(_.cloneDeep(carModelsArray))
   .flatten()
   .value();
 
-var App = React.createClass({
-  displayName: 'App',
+const App = React.createClass({
+  displayName: "App",
   getInitialState() {
     return {
       complexList: [],
-      complexCarBrand: '',
+      complexCarBrand: ""
     };
   },
   onChangeComplexTypeahead(val) {
-    var list = [];
+    let list = [];
 
     val = val.toLowerCase();
 
     // This typeahead matcher only matches beginning of string.
-    if (val !== '') {
+    if (val !== "") {
       // Users can type either a car brand or a model. Both would be fun but take more time to code.
       list = _(carModelsArray)
-        .filter(function (carBrandObj) {
-          var matchesBrand = carBrandObj.brand.toLowerCase().indexOf(val) === 0;
-          var matchesModel = carBrandObj.model.toLowerCase().indexOf(val) === 0;
+        .filter((carBrandObj) => {
+          const matchesBrand = carBrandObj.brand.toLowerCase().indexOf(val) === 0;
+          const matchesModel = carBrandObj.model.toLowerCase().indexOf(val) === 0;
 
           return matchesBrand || matchesModel;
         })
@@ -50,7 +51,7 @@ var App = React.createClass({
 
     this.setState({
       complexList: list,
-      complexCarBrand: ''
+      complexCarBrand: ""
     });
   },
   onNavigateToComplexOption(option) {
@@ -66,18 +67,19 @@ var App = React.createClass({
   },
   render() {
     return (
-      <div>
+      <div className="demo">
         <h3>Basic Typeahead</h3>
         <RadonTypeahead list={carBrandsArray} inputComponent={<input />}/>
         <h3>Complex Typeahead</h3>
         <p>Selected: {this.state.complexCarBrand}</p>
         <RadonTypeahead
           onChange={this.onChangeComplexTypeahead}
-          manualMode={true}
+          manualMode
           onArrowNavigation={this.onNavigateToComplexOption}
           onSelectOption={this.onSelectComplexOption}
           list={this.state.complexList}
-          listItemComponent={<ListItem />} />
+          listItemComponent={<ListItem />}
+        />
         <h3>AJAX Typeahead</h3>
         <AjaxAhead />
       </div>
@@ -85,4 +87,6 @@ var App = React.createClass({
   }
 });
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const content = document.getElementById("content");
+
+ReactDOM.render(<App/>, content);

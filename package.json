@@ -1,46 +1,33 @@
 {
   "name": "radon-typeahead",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "React typeahead component",
-  "main": "index.js",
-  "scripts": {
-    "examples": "webpack-dev-server --config examples/webpack.config.js --no-info --content-base examples/",
-    "lib": "rimraf lib && babel --stage 0 src/ -d lib/",
-    "lint": "eslint src/select.jsx",
-    "prepublish": "npm run lib",
-    "test": "karma start"
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FormidableLabs/radon-typeahead.git"
   },
-  "author": "",
   "license": "MIT",
-  "devDependencies": {
-    "babel-core": "^4.7.16",
-    "babel-eslint": "^2.0.2",
-    "babel-loader": "^4.3.0",
-    "chai": "^2.1.2",
-    "gulp": "^3.8.11",
-    "gulp-eslint": "^0.6.0",
-    "gulp-react": "^3.0.1",
-    "gulp-rimraf": "^0.1.1",
-    "jsx-loader": "^0.12.2",
-    "karma": "~0.12.21",
-    "karma-chrome-launcher": "~0.1.4",
-    "karma-firefox-launcher": "~0.1.3",
-    "karma-mocha": "^0.1.10",
-    "karma-mocha-reporter": "^1.0.2",
-    "karma-phantomjs-launcher": "~0.1.3",
-    "karma-script-launcher": "~0.1.0",
-    "karma-sinon-chai": "^0.3.0",
-    "karma-webpack": "^1.5.0",
-    "lodash": "^3.6.0",
-    "mocha": "^2.2.1",
-    "react": "^0.14.0",
-    "react-dom": "^0.14.0",
-    "sinon": "^1.14.1",
-    "sinon-chai": "^2.7.0",
-    "webpack": "^1.5.3",
-    "webpack-dev-server": "^1.7.0"
+  "bugs": {
+    "url": "https://github.com/FormidableLabs/radon-typeahead/issues"
+  },
+  "homepage": "https://github.com/FormidableLabs/radon-typeahead",
+  "scripts": {
+    "postinstall": "builder run npm:postinstall",
+    "preversion": "builder run npm:preversion",
+    "version": "builder run npm:version",
+    "test": "builder run npm:test"
   },
   "dependencies": {
-    "lodash.filter": "^3.1.0"
+    "builder": "^2.5.0",
+    "builder-react-component": "^0.3.5"
+  },
+  "devDependencies": {
+    "builder-react-component-dev": "^0.3.5",
+    "enzyme": "^2.4.1",
+    "lodash": "^4.13.1",
+    "react": "^15.2.1 || ^0.14.8",
+    "react-addons-test-utils": "^15.2.1 || ^0.14.8",
+    "react-dom": "^15.2.1 || ^0.14.8"
   }
 }

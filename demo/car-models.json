@@ -1,4 +1,4 @@
-module.exports = [
+[
   {
     "brand": "Acura",
     "models": [
@@ -1542,4 +1542,4 @@ module.exports = [
       "GVX"
     ]
   }
-];
+]
