@@ -23,7 +23,8 @@ export default React.createClass({
     onArrowNavigation: PropTypes.func,
     onChange: PropTypes.func,
     onResetVal: PropTypes.func,
-    onSelectOption: PropTypes.func
+    onSelectOption: PropTypes.func,
+    val: PropTypes.string
   },
   getDefaultProps() {
     return {
@@ -34,7 +35,7 @@ export default React.createClass({
   },
   getInitialState() {
     return {
-      val: "",
+      val: (this.props.manualMode && this.props.val) ? this.props.val : "",
       oldVal: "",
       selectedOptionIndex: false,
       list: [],
@@ -48,6 +49,9 @@ export default React.createClass({
         list: nextProps.list,
         listOpen: nextProps.list.length !== 0
       });
+    }
+    if (nextProps.val && nextProps.manualMode) {
+      this.setState({ val: nextProps.val });
     }
   },
   hideList() {
