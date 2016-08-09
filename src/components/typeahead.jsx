@@ -44,14 +44,16 @@ export default React.createClass({
     };
   },
   componentWillReceiveProps(nextProps) {
-    if (nextProps.list && nextProps.manualMode === true) {
-      this.setState({
-        list: nextProps.list,
-        listOpen: nextProps.list.length !== 0
-      });
-    }
-    if (nextProps.val && nextProps.manualMode) {
-      this.setState({ val: nextProps.val });
+    if (nextProps.manualMode) {
+      if (nextProps.list) {
+        this.setState({
+          list: nextProps.list,
+          listOpen: nextProps.list.length !== 0
+        });
+      }
+      if (nextProps.val) {
+        this.setState({ val: nextProps.val });
+      }
     }
   },
   hideList() {
