@@ -24,7 +24,7 @@ export default React.createClass({
     onChange: PropTypes.func,
     onResetVal: PropTypes.func,
     onSelectOption: PropTypes.func,
-    val: PropTypes.string
+    value: PropTypes.string
   },
   getDefaultProps() {
     return {
@@ -35,7 +35,7 @@ export default React.createClass({
   },
   getInitialState() {
     return {
-      val: (this.props.manualMode && this.props.val) ? this.props.val : "",
+      val: (this.props.manualMode && this.props.value) ? this.props.value : "",
       oldVal: "",
       selectedOptionIndex: false,
       list: [],
@@ -51,8 +51,8 @@ export default React.createClass({
           listOpen: nextProps.list.length !== 0
         });
       }
-      if (nextProps.val) {
-        this.setState({ val: nextProps.val });
+      if (nextProps.value) {
+        this.setState({ val: nextProps.value });
       }
     }
   },

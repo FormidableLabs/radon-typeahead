@@ -29,20 +29,20 @@ describe("components/typeahead", () => {
 
   it("can render with a value passed down through props when in manual mode", () => {
     const testVal = "Test Value";
-    const wrapper = shallow(<Typeahead val={testVal} manualMode />);
+    const wrapper = shallow(<Typeahead value={testVal} manualMode />);
     const inputVal = wrapper.find("input").props().value;
     expect(inputVal).to.equal(testVal);
   });
 
-  it("in manual mode, value defaults to '' when val prop is not provided", () => {
+  it("in manual mode, value defaults to '' when value prop is not provided", () => {
     const wrapper = shallow(<Typeahead manualMode />);
     const inputVal = wrapper.find("input").props().value;
     expect(inputVal).to.equal("");
   });
 
-  it("initializes with an empty value when not in manual mode", () => {
+  it("when not in manual mode, value defaults to '' even if value prop is provided", () => {
     const testVal = "Test Value";
-    const wrapper = shallow(<Typeahead val={testVal} />);
+    const wrapper = shallow(<Typeahead value={testVal} />);
     const inputVal = wrapper.find("input").props().value;
     expect(inputVal).to.equal("");
   });
