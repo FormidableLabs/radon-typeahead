@@ -26,4 +26,25 @@ describe("components/typeahead", () => {
     expect(list.containsMatchingElement(<div>bar</div>)).to.equal(true);
     expect(list.containsMatchingElement(<div>baz</div>)).to.equal(true);
   });
+
+  it("can render with a value passed down through props when in manual mode", () => {
+    const testVal = "Test Value";
+    const wrapper = shallow(<Typeahead value={testVal} manualMode />);
+    const inputVal = wrapper.find("input").props().value;
+    expect(inputVal).to.equal(testVal);
+  });
+
+  it("in manual mode, value defaults to '' when value prop is not provided", () => {
+    const wrapper = shallow(<Typeahead manualMode />);
+    const inputVal = wrapper.find("input").props().value;
+    expect(inputVal).to.equal("");
+  });
+
+  it("when not in manual mode, value defaults to '' even if value prop is provided", () => {
+    const testVal = "Test Value";
+    const wrapper = shallow(<Typeahead value={testVal} />);
+    const inputVal = wrapper.find("input").props().value;
+    expect(inputVal).to.equal("");
+  });
+
 });

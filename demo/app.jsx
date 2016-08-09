@@ -82,6 +82,8 @@ const App = React.createClass({
         />
         <h3>AJAX Typeahead</h3>
         <AjaxAhead />
+        <h3>Value passed down through props</h3>
+        <RadonTypeahead value="Pass down this value please" manualMode />
       </div>
     );
   }
