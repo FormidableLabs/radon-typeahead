@@ -128,7 +128,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          listOpen: nextProps.list.length !== 0
 	        });
 	      }
-	      if (nextProps.value) {
+	      if (nextProps.hasOwnProperty("value")) {
 	        this.setState({ val: nextProps.value });
 	      }
 	    }
