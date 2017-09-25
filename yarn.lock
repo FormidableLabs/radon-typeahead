@@ -1228,9 +1228,9 @@ build@^0.1.4:
     winston "*"
     wrench "1.3.x"
 
-builder-react-component-dev@^0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/builder-react-component-dev/-/builder-react-component-dev-0.4.1.tgz#fa20b91f2a8c68f42bae00839863ce3a556eea67"
+builder-react-component-dev@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/builder-react-component-dev/-/builder-react-component-dev-0.4.2.tgz#8e1bc3f69c8c19ba46c91212b3a932cbe580b429"
   dependencies:
     babel-eslint "^8.0.0"
     chai "^4.1.2"
@@ -1264,9 +1264,9 @@ builder-react-component-dev@^0.4.1:
     webpack "^3.6.0"
     webpack-dev-server "^2.8.2"
 
-builder-react-component@^0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/builder-react-component/-/builder-react-component-0.4.1.tgz#d7353bb1765b6c72b839f959135e085153684002"
+builder-react-component@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/builder-react-component/-/builder-react-component-0.4.2.tgz#833ec79bf23b651d767ab7a845a01bfb85ef6fea"
   dependencies:
     babel-cli "^6.26.0"
     babel-core "^6.26.0"
