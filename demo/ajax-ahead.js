@@ -3,13 +3,22 @@ import React from "react";
 import RadonTypeahead from "../lib/components/typeahead";
 import carBrandsArray from "./car-brands";
 
-export default React.createClass({
-  getInitialState() {
-    return {
+const TYPEAHEAD_DELAY = 1000;
+
+export default class AjaxAhead extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
       selectedVal: ""
     };
-  },
-  onTypeaheadChange(val, asyncListCallback) {
+
+    this.handleOnTypeaheadChange = this.handleOnTypeaheadChange.bind(this);
+    this.handleOnTypeaheadSelection = this.handleOnTypeaheadSelection.bind(this);
+  }
+
+  handleOnTypeaheadChange(val, asyncListCallback) {
     // mimic async ajax call
     setTimeout(() => {
       // Make the ajax call with `val`
@@ -21,24 +30,26 @@ export default React.createClass({
       // handle case that val is empty
       asyncListCallback(val ? filteredList : []);
 
-    }, 1000);
-  },
-  onTypeaheadSelection(val) {
+    }, TYPEAHEAD_DELAY);
+  }
+
+  handleOnTypeaheadSelection(val) {
     this.setState({
       selectedVal: val
     });
-  },
+  }
+
   render() {
     return (
       <div>
         <p>Selected: {this.state.selectedVal}</p>
         <RadonTypeahead
           list={this.state.ajaxList}
-          onChange={this.onTypeaheadChange}
-          onSelectOption={this.onTypeaheadSelection}
+          onChange={this.handleOnTypeaheadChange}
+          onSelectOption={this.handleOnTypeaheadSelection}
           manualMode
         />
       </div>
     );
   }
-});
+}

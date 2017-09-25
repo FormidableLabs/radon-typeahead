@@ -13,21 +13,38 @@
   },
   "homepage": "https://github.com/FormidableLabs/radon-typeahead",
   "scripts": {
-    "postinstall": "cd lib || builder run npm:postinstall",
+    "postinstall": "builder run npm:postinstall",
     "preversion": "builder run npm:preversion",
     "version": "builder run npm:version",
+    "postversion": "builder run npm:postversion",
+    "postpublish": "builder run npm:postpublish",
     "test": "builder run npm:test"
   },
   "dependencies": {
-    "builder": "^3.0.0",
-    "builder-react-component": "^0.3.5"
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "builder": "^3.2.2",
+    "builder-react-component": "^0.4.0"
   },
   "devDependencies": {
-    "builder-react-component-dev": "^0.3.5",
-    "enzyme": "^2.4.1",
-    "lodash": "^4.13.1",
-    "react": "^15.2.1 || ^0.14.8",
-    "react-addons-test-utils": "^15.2.1 || ^0.14.8",
-    "react-dom": "^15.2.1 || ^0.14.8"
+    "builder-react-component-dev": "^0.4.0",
+    "enzyme": "^2.9.1",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-addons-test-utils": "^15.6.0",
+    "react-dom": "^15.6.1",
+    "react-test-renderer": "^15.6.1"
+  },
+  "publishr": {
+    "dependencies": [
+      "^babel",
+      "^builder"
+    ],
+    "files": {
+      ".npmignore": ".npmignore.publishr"
+    },
+    "scripts": {
+      "postinstall": ""
+    }
   }
 }

@@ -13,9 +13,13 @@ Desktop.ini
 $RECYCLE.BIN/
 .tmp
 npm-debug.log*
+.lankrc.js
+.vscode
 
 # Code / build
 coverage
 node_modules
 bower_components
+es
 lib
+dist

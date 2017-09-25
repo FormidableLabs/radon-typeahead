@@ -1,4 +1,7 @@
 {
-  "stage": 0,
-  "nonStandard": true
+  "extends": "builder-react-component/config/babel/.babelrc",
+  "plugins": [
+    "transform-class-properties",
+    "transform-object-rest-spread"
+  ]
 }

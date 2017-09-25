@@ -1,1 +1,3 @@
-module.exports = require("./components/typeahead");
+import RadonTypeahead from "./components/typeahead";
+
+export default RadonTypeahead;

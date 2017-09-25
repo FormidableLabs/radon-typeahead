@@ -1,35 +1,37 @@
 /*global document:false*/
 import React from "react";
 import ReactDOM from "react-dom";
-import _ from "lodash";
 import RadonTypeahead from "../src/index";
 import ListItem from "./list-item";
 import AjaxAhead from "./ajax-ahead";
 import carBrandsArray from "./car-brands";
 let carModelsArray = require("./car-models");
 
-carModelsArray = _(carModelsArray)
-  .map((carBrandObj) => {
-    return _.map(carBrandObj.models, (model) => {
-      return {
-        brand: carBrandObj.brand,
-        model,
-        value: model
-      };
-    });
-  })
-  .flatten()
-  .value();
+carModelsArray = carModelsArray
+  .map((carBrandObj) => carBrandObj.models.map((model) => ({
+    brand: carBrandObj.brand,
+    model,
+    value: model
+  })))
+  .reduce((acc, cur) => acc.concat(cur), []); // flatten
 
-const App = React.createClass({
-  displayName: "App",
-  getInitialState() {
-    return {
+class App extends React.Component {
+  static displayName = "App";
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
       complexList: [],
       complexCarBrand: ""
     };
-  },
-  onChangeComplexTypeahead(val) {
+
+    this.handleOnChangeComplexTypeahead = this.handleOnChangeComplexTypeahead.bind(this);
+    this.handleOnNavigateToComplexOption = this.handleOnNavigateToComplexOption.bind(this);
+    this.handleOnSelectComplexOption = this.handleOnSelectComplexOption.bind(this);
+  }
+
+  handleOnChangeComplexTypeahead(val) {
     let list = [];
 
     val = val.toLowerCase();
@@ -37,7 +39,7 @@ const App = React.createClass({
     // This typeahead matcher only matches beginning of string.
     if (val !== "") {
       // Users can type either a car brand or a model. Both would be fun but take more time to code.
-      list = _(carModelsArray)
+      list = carModelsArray
         .filter((carBrandObj) => {
           const matchesBrand = carBrandObj.brand.toLowerCase().indexOf(val) === 0;
           const matchesModel = carBrandObj.model.toLowerCase().indexOf(val) === 0;
@@ -45,26 +47,28 @@ const App = React.createClass({
           return matchesBrand || matchesModel;
         })
         // Only show the first 7 entries
-        .slice(0, 7)
-        .value();
+        .slice(0, 7); // eslint-disable-line no-magic-numbers
     }
 
     this.setState({
       complexList: list,
       complexCarBrand: ""
     });
-  },
-  onNavigateToComplexOption(option) {
+  }
+
+  handleOnNavigateToComplexOption(option) {
     this.setState({
       complexCarBrand: option.brand
     });
-  },
-  onSelectComplexOption(option) {
+  }
+
+  handleOnSelectComplexOption(option) {
     this.setState({
       complexCarBrand: option.brand,
       complexList: []
     });
-  },
+  }
+
   render() {
     return (
       <div className="demo">
@@ -73,10 +77,10 @@ const App = React.createClass({
         <h3>Complex Typeahead</h3>
         <p>Selected: {this.state.complexCarBrand}</p>
         <RadonTypeahead
-          onChange={this.onChangeComplexTypeahead}
+          onChange={this.handleOnChangeComplexTypeahead}
           manualMode
-          onArrowNavigation={this.onNavigateToComplexOption}
-          onSelectOption={this.onSelectComplexOption}
+          onArrowNavigation={this.handleOnNavigateToComplexOption}
+          onSelectOption={this.handleOnSelectComplexOption}
           list={this.state.complexList}
           listItemComponent={<ListItem />}
         />
@@ -87,7 +91,7 @@ const App = React.createClass({
       </div>
     );
   }
-});
+}
 
 const content = document.getElementById("content");
 

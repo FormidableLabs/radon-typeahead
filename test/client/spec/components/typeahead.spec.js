@@ -2,7 +2,7 @@
  * Client tests
  */
 import React from "react";
-import Typeahead from "src/components/typeahead";
+import Typeahead from "src/components/typeahead"; // eslint-disable-line import/no-unresolved
 import { shallow } from "enzyme";
 
 describe("components/typeahead", () => {

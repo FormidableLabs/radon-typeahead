@@ -1,5 +1,5 @@
-import React, { PropTypes } from "react";
-import ReactDOM from "react-dom";
+import React from "react";
+import PropTypes from "prop-types";
 
 const keyboard = {
   space: 32,
@@ -10,9 +10,10 @@ const keyboard = {
   downArrow: 40
 };
 
-export default React.createClass({
-  displayName: "RadonTypeahead",
-  propTypes: {
+export default class RadonTypeahead extends React.Component {
+  static displayName = "RadonTypeahead";
+
+  static propTypes = {
     inputComponent: PropTypes.element,
     list: PropTypes.array,
     listClassName: PropTypes.string,
@@ -25,16 +26,18 @@ export default React.createClass({
     onResetVal: PropTypes.func,
     onSelectOption: PropTypes.func,
     value: PropTypes.string
-  },
-  getDefaultProps() {
-    return {
-      list: [],
-      manualMode: false,
-      onChange() {}
-    };
-  },
-  getInitialState() {
-    return {
+  };
+
+  static defaultProps = {
+    list: [],
+    manualMode: false,
+    onChange() {}
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
       val: (this.props.manualMode && this.props.value) ? this.props.value : "",
       oldVal: "",
       selectedOptionIndex: false,
@@ -42,7 +45,16 @@ export default React.createClass({
       listOpen: false,
       touchScroll: false
     };
-  },
+
+    this.onBlur = this.onBlur.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onClickOption = this.onClickOption.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
+    this.onTouchEnd = this.onTouchEnd.bind(this);
+    this.onTouchMove = this.onTouchMove.bind(this);
+    this.handleOnMouseDown = this.handleOnMouseDown.bind(this);
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.manualMode) {
       if (nextProps.list) {
@@ -55,12 +67,14 @@ export default React.createClass({
         this.setState({ val: nextProps.value });
       }
     }
-  },
+  }
+
   hideList() {
     this.setState({
       listOpen: false
     });
-  },
+  }
+
   onChange(ev) {
     const val = ev.target.value;
     const state = {
@@ -110,7 +124,8 @@ export default React.createClass({
     } else {
       this.props.onChange(val);
     }
-  },
+  }
+
   resetOldVal() {
     this.setState({
       selectedOptionIndex: false,
@@ -121,7 +136,8 @@ export default React.createClass({
     if (typeof this.props.onResetVal === "function") {
       this.props.onResetVal(this.state.oldVal);
     }
-  },
+  }
+
   setNewSelectedIndex(index, oldVal) {
     const option = this.state.list[index];
     const state = {
@@ -141,7 +157,8 @@ export default React.createClass({
         this.props.onArrowNavigation(option, index);
       }
     });
-  },
+  }
+
   moveIndexByOne(decrement) {
     const currentOption = this.state.selectedOptionIndex;
     const listLength = this.state.list.length;
@@ -158,7 +175,8 @@ export default React.createClass({
     } else {
       this.setNewSelectedIndex(currentOption + (decrement ? -1 : 1));
     }
-  },
+  }
+
   // Arrow keys are only captured by onKeyDown not onKeyPress
   // http://stackoverflow.com/questions/5597060/detecting-arrow-key-presses-in-javascript
   onKeyDown(i, ev) {
@@ -189,7 +207,8 @@ export default React.createClass({
         this.onClickOption(this.state.selectedOptionIndex);
       }
     }
-  },
+  }
+
   onBlur(ev) {
     // Clicks on the scrollbar will trigger the blur event, which can cause some
     // unintended behavior. However, the only way we can evaluate if this was
@@ -197,7 +216,7 @@ export default React.createClass({
     // have a "hover". So, if the mouse is hovering within our typeahead during
     // this blur event, instead of hiding the list, we'll consider it to be a
     // scroll click and do nothing.
-    const hoveredSelectEl = ReactDOM.findDOMNode(this).querySelector(":hover");
+    const hoveredSelectEl = this.div.querySelector(":hover");
     if (hoveredSelectEl) {
       return;
     }
@@ -207,7 +226,8 @@ export default React.createClass({
     }
 
     this.hideList();
-  },
+  }
+
   onClickOption(index) {
     const option = this.state.list[index];
     const state = {
@@ -230,13 +250,15 @@ export default React.createClass({
     if (typeof this.props.onSelectOption === "function") {
       this.props.onSelectOption(option, index);
     }
-  },
-  onMouseDown(ev) {
+  }
+
+  handleOnMouseDown(ev) {
     // ensure clicks on the scrollbar do not steal focus
     if (this.state.listOpen) {
       ev.preventDefault();
     }
-  },
+  }
+
   // Once the user has let up on a touch, determine whether their touch was part
   // of a scrolling gesture (via the state variable, `touchScroll`).
   // If it was indeed a scroll gesture, we'll consider it a no-op and reset the
@@ -247,20 +269,25 @@ export default React.createClass({
       this.onClickOption(index);
     }
 
-    this.setState({touchScroll: false});
-  },
+    this.setState({ touchScroll: false });
+  }
+
   // Capture a mouse drag on a typeahead suggestion and consider it as a
   // "scrolling" gesture. We'll track this scrolling as a state variable,
   // `touchScroll`.
   onTouchMove() {
-    this.setState({touchScroll: true});
-  },
-  renderListItem() {
+    this.setState({ touchScroll: true });
+  }
 
-  },
+  renderListItem() {
+  }
+
   render() {
     return (
-      <div style={this.props.mainStyle}>
+      <div
+        style={this.props.mainStyle}
+        ref={(r) => {this.div = r;}}
+      >
         {React.cloneElement(
           this.props.inputComponent || <input />,
           {
@@ -274,7 +301,7 @@ export default React.createClass({
           <div
             className={this.props.listClassName || "typeahead-list"}
             style={this.props.listStyle}
-            onMouseDown={this.onMouseDown}
+            onMouseDown={this.handleOnMouseDown}
           >
             {this.state.list.map((item, i) => {
               const props = typeof item === "string" ?
@@ -314,4 +341,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+}
