@@ -3,6 +3,8 @@
   "version": "0.5.1",
   "description": "React typeahead component",
   "main": "lib/index.js",
+  "module": "es/index.js",
+  "jsnext:main": "es/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/FormidableLabs/radon-typeahead.git"
